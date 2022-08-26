@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Todo App</title>
+
+    <style>
+      body {
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Job List</h1>
+
+      <!-- blok untuk menampilkan notifikasi pesan sukses -->
+      <div>
+      {% if messages %}
+  
+      
+      {% for message in messages %}
+      
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            
+            <span aria-hidden="true">&times;</span>
+        
+          </button>
+          
+          {{ message | safe }}
+      
+        </div>
+      
+        {% endfor %}
+        
+        {% endif %}
+      </div>
+      <!-- blok untuk menampilkan notifikasi pesan sukses -->
+
+
+      <!-- tombol untuk ke halaman tambah task -->
+      <div>
+        <a href="{% url 'todo:create' %}" class="btn btn-success">Add New Task</a>
+      </div>
+      <!-- tombol untuk ke halaman tambah task -->
+
+      <br>
+
+      <table class="table table-bordered table-striped">
+          <thead>
+              <tr>
+
+                  <th width="20%">Title</th>
+                  <th width="45%">Description</th>
+                  <th width="5%">Status</th>
+                  <th width="20%">Action</th>
+              </tr>
+          </thead>
+
+          <tbody>
+            
+            <!-- daftar task-->
+            {% if tasks %}
+              {% for task in tasks %}
+              <tr>
+                  
+                  <td>{{ task.title }}</td>
+                  <td>{{ task.description }}</td>
+                  <td>{{ task.status }}</td>
+                  <td>
+
+                      <!--url-->
+                      <a href="{% url 'todo:detail' task.id %}" class="btn btn-warning btn-sm">Detail</a>
+                      <a href="{% url 'todo:update' task.id %}" class="btn btn-primary btn-sm">Edit</a>
+                      <a href="{% url 'todo:delete' task.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure To Delete This Task?')">Delete</a>
+                      <!--url-->
+
+                  </td>
+              </tr>
+              {% endfor %}
+
+            {% else %}
+              <tr>
+                <td colspan="5">Data Not Found.</td>
+              </tr>
+            {% endif %}
+             <!-- daftar task-->
+
+          </tbody>
+
+      </table>
+
+  </div>
+ 
+  </body>
+</html>
